@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from PIL import Image, ImageEnhance
+from PIL import Image, ImageEnhance, ImageFilter
 import os
 
 # Create your views here.
@@ -37,6 +37,22 @@ def index(request):
             r, g, b = image.split()
             r = r.point(lambda i: i * 1.2)
             image = Image.merge('RGB', (r, g, b))
+
+        elif filter_type == "hdr":
+            enhancer = ImageEnhance.Contrast(image)
+            image = enhancer.enhance(2.5)
+
+            color = ImageEnhance.Color(image)
+            image = color.enhance(1.5)
+
+        elif filter_type == "beauty":
+            image = image.filter(ImageFilter.SMOOTH)
+
+        elif filter_type == "blur":
+            image = image.filter(ImageFilter.GaussianBlur(radius=5))
+
+
+
 
         # save output
         output_path = "media/output.jpg"
