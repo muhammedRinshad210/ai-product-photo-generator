@@ -34,6 +34,29 @@ img {
     margin-top: 20px;
     border-radius: 10px;
 }
+.container {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+}
+
+img {
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+
+button {
+    margin: 5px;
+    padding: 10px 15px;
+    border: none;
+    background: #2196F3;
+    color: white;
+    border-radius: 5px;
+}
+
+button:hover {
+    background: #1976D2;
+}
 </style>
 <body>
     <h2>Upload Image</h2>
@@ -57,7 +80,33 @@ img {
     {% if image_url %}
     <h3>Result : </h3>
     <img src="{{ image_url }}" width="300">
+
+    <br><br>
+    
+
+    <a href="{{ image_url }}" download>
+        <button>Download Image</button>
+    </a>
+    <br><br>
+
+    <h3>Before / After</h3>
+
+    <div style="display: flex; justify-content: center; gap: 20px;">
+        <div>
+            <p>Original</p>
+            <img src = "{{ original_url }}" width="250">
+        </div>
+
+        <div>
+            <p>Edited</p>
+            <img src="{{ image_url }}" width="250">
+        </div>
+
+            
+        </div>
+    </div>
     {% endif %}
+    
     
 </body>
 </html>

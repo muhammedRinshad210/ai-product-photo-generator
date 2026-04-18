@@ -1,11 +1,13 @@
 from django.shortcuts import render
 from PIL import Image, ImageEnhance, ImageFilter
 import os
+import time
 
 # Create your views here.
 
 def index(request):
     image_url = None
+    original_url = None
 
     if request.method == "POST":
         file = request.FILES.get('image')
@@ -16,11 +18,16 @@ def index(request):
 
         # if new image uploaded
         if file:
-            path = "media/original.jpg"
+            filename = "original_" + file.name
+            path = "media/" + filename
             image = Image.open(file)
             image.save(path)
+
+            # ✅ SAVE LAST IMAGE
+            image.save("media/original_last.jpg")
         else:
-            path = "media/original.jpg"
+            filename = "original_last.jpg" 
+            path = "media/" + filename
             if not os.path.exists(path):
                 return render(request, "index.html")
             image = Image.open(path)
@@ -59,7 +66,9 @@ def index(request):
         image.save(output_path)
 
         image_url = "/media/output.jpg"
+        
 
+        original_url = "/media/" + filename + "?t=" + str(time.time())
 
         # # save original image
         # image = Image.open(file)
@@ -77,4 +86,7 @@ def index(request):
         # image_url = path
         
 
-    return render(request, "index.html" , {'image_url' : image_url})
+    return render(request, "index.html" , {
+        'image_url' : image_url , 
+        'original_url': original_url
+        })
