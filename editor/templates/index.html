@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Upload Image</h2>
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <input type="file" name="image" >
+
+        <h1>AI Photo Editor</h1> 
+
+        <button name="filter" value="bw">Black & White</button>
+        <button name="filter" value="enhance">Enhance</button>
+        <button name="filter" value="warm">Warm</button>
+        
+    </form>
+
+    {% if image_url %}
+    <h3>Result : </h3>
+    <img src="{{ image_url }}" width="300">
+    {% endif %}
+    
+</body>
+</html>
