@@ -62,11 +62,12 @@ def index(request):
 
 
         # save output
-        output_path = "media/output.jpg"
+        output_filename = "output_" + filename
+        output_path = "media/" + output_filename   # ✅ FIXED
+
         image.save(output_path)
 
-        image_url = "/media/output.jpg"
-        
+        image_url = "/media/" + output_filename + "?t=" + str(time.time())
 
         original_url = "/media/" + filename + "?t=" + str(time.time())
 
