@@ -46,11 +46,23 @@ def index(request):
             image = Image.merge('RGB', (r, g, b))
 
         elif filter_type == "hdr":
-            enhancer = ImageEnhance.Contrast(image)
-            image = enhancer.enhance(2.5)
+            # 1. Increase contrast
+            contrast = ImageEnhance.Contrast(image)
+            image = contrast.enhance(1.8)
 
+            # 2. Increase color (vibrance)
             color = ImageEnhance.Color(image)
-            image = color.enhance(1.5)
+            image = color.enhance(1.8)
+
+            # 3. Add sharpness (IMPORTANT)
+            sharp = ImageEnhance.Sharpness(image)
+            image = sharp.enhance(2.0)
+
+            # 4. Slight brightness boost
+            bright = ImageEnhance.Brightness(image)
+            image = bright.enhance(1.1)
+
+            image = image.filter(ImageFilter.DETAIL)
 
         elif filter_type == "beauty":
             image = image.filter(ImageFilter.SMOOTH)
